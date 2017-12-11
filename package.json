@@ -2,7 +2,7 @@
   "name": "react-mentions-fullbridge",
   "version": "1.0.1",
   "description": "React-mentions with custom fixes",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "repository": "https://github.com/fullbridge/react-mentions.git",
   "author": "<daniel.alexander.simon@gmail.com>",
   "license": "MIT",
