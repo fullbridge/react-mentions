@@ -7,6 +7,17 @@
   "author": "<daniel.alexander.simon@gmail.com>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "npm run env NODE_ENV=test && mocha",
+    "transpile": "npm run env NODE_ENV=production && babel src --out-dir lib",
+    "clean": "rimraf lib",
+    "start": "cd gh-pages && webpack-dev-server --config webpack.dev.config.js --port 9090 --d --hot --inline --progress --colors",
+    "lint": "eslint src",
+    "pretranspile": "npm run clean",
+    "prepublish": "npm run transpile",
+    "prepages-publish": "npm run env NODE_ENV=production && cd gh-pages && webpack",
+    "pages-publish": "grunt publish"
+  },
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-core": "^6.22.1",
