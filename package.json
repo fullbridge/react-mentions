@@ -1,6 +1,6 @@
 {
   "name": "react-mentions-fullbridge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React-mentions with custom fixes",
   "main": "src/index.js",
   "repository": "https://github.com/fullbridge/react-mentions.git",
