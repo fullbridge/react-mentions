@@ -23,11 +23,18 @@ class Suggestion extends Component {
     focused: PropTypes.bool,
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.focused && !prevProps.focused) {
+      this.el.scrollIntoView({block: 'nearest'})
+    }
+  }
+
   render() {
     let rest = omit(this.props, 'style', keys(Suggestion.propTypes));
 
     return (
       <li
+        ref={el => this.el = el}
         { ...rest }
         { ...this.props.style }
       >
