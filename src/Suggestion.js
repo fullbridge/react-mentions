@@ -3,25 +3,26 @@ import PropTypes from 'prop-types';
 import { defaultStyle } from 'substyle';
 import omit from 'lodash/omit';
 import keys from 'lodash/keys';
+import utils from './utils';
 
 class Suggestion extends Component {
 
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    query: PropTypes.string.isRequired,
-    index: PropTypes.number.isRequired,
-
-    suggestion: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        display: PropTypes.string
-      }),
-    ]).isRequired,
-    descriptor: PropTypes.object.isRequired,
-
-    focused: PropTypes.bool,
-  };
+  // static propTypes = {
+  //   id: PropTypes.string.isRequired,
+  //   query: PropTypes.string.isRequired,
+  //   index: PropTypes.number.isRequired,
+  //
+  //   suggestion: PropTypes.oneOfType([
+  //     PropTypes.string,
+  //     PropTypes.shape({
+  //       id: PropTypes.string.isRequired,
+  //       display: PropTypes.string
+  //     }),
+  //   ]).isRequired,
+  //   descriptor: PropTypes.object.isRequired,
+  //
+  //   focused: PropTypes.bool,
+  // };
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.focused && !prevProps.focused) {
@@ -31,12 +32,14 @@ class Suggestion extends Component {
 
   render() {
     let rest = omit(this.props, 'style', keys(Suggestion.propTypes));
+    rest = utils.getFilteredProps(this.props)
 
     return (
       <li
         ref={el => this.el = el}
         { ...rest }
-        { ...this.props.style }
+        className={this.props.suggestionClassName + (this.props.focused ? ` ${this.props.focusedSuggestionClassName}` : "")}
+        // { ...this.props.style }
       >
 
         { this.renderContent() }
@@ -83,7 +86,7 @@ class Suggestion extends Component {
     }
 
     return (
-      <span { ...style("display") }>
+      <span>
         { display.substring(0, i) }
         <b { ...style("highlight") }>
           { display.substring(i, i+query.length) }

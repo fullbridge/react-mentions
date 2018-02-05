@@ -50,32 +50,32 @@ const KEY = { TAB : 9, RETURN : 13, ESC : 27, UP : 38, DOWN : 40 };
 let isComposing = false;
 
 class MentionsInput extends React.Component {
-  static propTypes = {
-    /**
-     * If set to `true` a regular text input element will be rendered
-     * instead of a textarea
-     */
-    singleLine: PropTypes.bool,
-
-    /**
-     * If set to `true` spaces will not interrupt matching suggestions
-     */
-    allowSpaceInQuery: PropTypes.bool,
-
-    markup: PropTypes.string,
-    value: PropTypes.string,
-
-    displayTransform: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    onSelect: PropTypes.func,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
-
-    children: PropTypes.oneOfType([
-      PropTypes.element,
-      PropTypes.arrayOf(PropTypes.element),
-    ]).isRequired
-  };
+  // static propTypes = {
+  //   /**
+  //    * If set to `true` a regular text input element will be rendered
+  //    * instead of a textarea
+  //    */
+  //   singleLine: PropTypes.bool,
+  //
+  //   /**
+  //    * If set to `true` spaces will not interrupt matching suggestions
+  //    */
+  //   allowSpaceInQuery: PropTypes.bool,
+  //
+  //   markup: PropTypes.string,
+  //   value: PropTypes.string,
+  //
+  //   displayTransform: PropTypes.func,
+  //   onKeyDown: PropTypes.func,
+  //   onSelect: PropTypes.func,
+  //   onBlur: PropTypes.func,
+  //   onChange: PropTypes.func,
+  //
+  //   children: PropTypes.oneOfType([
+  //     PropTypes.element,
+  //     PropTypes.arrayOf(PropTypes.element),
+  //   ]).isRequired
+  // };
 
   static defaultProps = {
     markup: "@[__display__](__id__)",
@@ -107,7 +107,7 @@ class MentionsInput extends React.Component {
 
   render() {
     return (
-      <div ref="container" {...this.props.style}>
+      <div ref="container">
         { this.renderControl() }
         { this.renderSuggestionsOverlay() }
       </div>
@@ -115,14 +115,13 @@ class MentionsInput extends React.Component {
   }
 
   getInputProps = (isTextarea) => {
-    let { readOnly, disabled, style } = this.props;
+    let { readOnly, disabled } = this.props;
 
     // pass all props that we don't use through to the input control
     let props = omit(this.props, 'style', keys(MentionsInput.propTypes));
 
     return {
       ...props,
-      ...style("input"),
 
       value: this.getPlainText(),
 
@@ -138,12 +137,12 @@ class MentionsInput extends React.Component {
   };
 
   renderControl = () => {
-    let { singleLine, style } = this.props;
+    let { singleLine } = this.props;
     let inputProps = this.getInputProps(!singleLine);
 
     return (
-      <div { ...style("control") }>
-        { this.renderHighlighter(inputProps.style) }
+      <div>
+
         { singleLine ? this.renderInput(inputProps) : this.renderTextarea(inputProps) }
       </div>
     );
@@ -159,10 +158,13 @@ class MentionsInput extends React.Component {
   };
 
   renderTextarea = (props) => {
+    let filteredProps = utils.getFilteredProps(props)
+
     return (
       <textarea
         ref="input"
-        { ...props } />
+        { ...filteredProps }
+        className={props.textAreaClassName} />
     );
   };
 
@@ -173,7 +175,10 @@ class MentionsInput extends React.Component {
     }
     return (
       <SuggestionsOverlay
-        style={ this.props.style("suggestions") }
+        // style={ this.props.style("suggestions") }
+        focusedSuggestionClassName={this.props.focusedSuggestionClassName}
+        suggestionsListClassName={this.props.suggestionsListClassName}
+        suggestionClassName={this.props.suggestionClassName}
         position={ this.state.suggestionsPosition }
         focusIndex={ this.state.focusIndex }
         scrollFocusedIntoView={ this.state.scrollFocusedIntoView }
@@ -196,8 +201,7 @@ class MentionsInput extends React.Component {
     return (
       <Highlighter
         ref="highlighter"
-        style={ style("highlighter") }
-        inputStyle={ inputStyle }
+        // inputStyle={ inputStyle }
         value={ value }
         markup={ markup }
         displayTransform={ displayTransform }
@@ -352,6 +356,7 @@ class MentionsInput extends React.Component {
   };
 
   shiftFocus = (delta) => {
+
     let suggestionsCount = utils.countSuggestions(this.state.suggestions);
 
     this.setState({
@@ -668,4 +673,4 @@ const styled = defaultStyle({
   "&multiLine": !singleLine,
 }));
 
-export default styled(MentionsInput);
+export default MentionsInput;

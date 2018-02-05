@@ -133,12 +133,13 @@ class Highlighter extends Component {
     }
 
     return (
-      <div
+      <div>
+        { /*
         { ...style }
         style={{
           ...inputStyle,
           ...style.style
-        }}>
+        }}> */}
 
         { resultComponents }
       </div>
@@ -148,7 +149,7 @@ class Highlighter extends Component {
   renderSubstring(string, key) {
     // set substring span to hidden, so that Emojis are not shown double in Mobile Safari
     return (
-      <span { ...this.props.style("substring") } key={key}>
+      <span key={key}>
         { string }
       </span>
     );
@@ -195,33 +196,33 @@ class Highlighter extends Component {
   // Renders an component to be inserted in the highlighter at the current caret position
   renderHighlighterCaret(children) {
     return (
-      <span { ...this.props.style("caret") } ref="caret" key="caret">
+      <span ref="caret" key="caret">
         { children }
       </span>
     );
   }
 }
 
-const styled = defaultStyle({
-  position: 'relative',
-  width: 'inherit',
-  color: 'transparent',
+// const styled = defaultStyle({
+  // position: 'relative',
+  // width: 'inherit',
+  // color: 'transparent',
+  //
+  // overflow: 'hidden',
+  //
+  // whiteSpace: 'pre-wrap',
+  // wordWrap: 'break-word',
+  //
+  // '&singleLine': {
+  //   whiteSpace: 'pre',
+  //   wordWrap: null
+  // },
+  //
+  // substring: {
+  //   visibility: 'hidden'
+//   }
+// }, (props) => ({
+//   '&singleLine': props.singleLine,
+// }));
 
-  overflow: 'hidden',
-
-  whiteSpace: 'pre-wrap',
-  wordWrap: 'break-word',
-
-  '&singleLine': {
-    whiteSpace: 'pre',
-    wordWrap: null
-  },
-
-  substring: {
-    visibility: 'hidden'
-  }
-}, (props) => ({
-  '&singleLine': props.singleLine,
-}));
-
-export default styled(Highlighter);
+export default Highlighter;

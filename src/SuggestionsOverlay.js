@@ -9,37 +9,40 @@ import LoadingIndicator from './LoadingIndicator';
 
 class SuggestionsOverlay extends Component {
 
-  static propTypes = {
-    suggestions: PropTypes.object.isRequired,
-    focusIndex: PropTypes.number,
-    scrollFocusedIntoView: PropTypes.bool,
-    isLoading: PropTypes.bool,
-    onSelect: PropTypes.func,
-  };
+  // static propTypes = {
+  //   suggestions: PropTypes.object.isRequired,
+  //   focusIndex: PropTypes.number,
+  //   scrollFocusedIntoView: PropTypes.bool,
+  //   isLoading: PropTypes.bool,
+  //   onSelect: PropTypes.func,
+  // };
 
   static defaultProps = {
     suggestions: {},
     onSelect: () => null,
   };
 
-  componentDidUpdate() {
-    const { suggestions } = this.refs
-    if (!suggestions || suggestions.offsetHeight >= suggestions.scrollHeight || !this.props.scrollFocusedIntoView) {
-      return
-    }
 
-    const scrollTop = suggestions.scrollTop
-    let { top, bottom } = suggestions.children[this.props.focusIndex].getBoundingClientRect();
-    const { top: topContainer } = suggestions.getBoundingClientRect();
-    top = top - topContainer + scrollTop;
-    bottom = bottom - topContainer + scrollTop;
-
-    if(top < scrollTop) {
-      suggestions.scrollTop = top
-    } else if(bottom > suggestions.offsetHeight) {
-      suggestions.scrollTop = bottom - suggestions.offsetHeight
-    }
-  }
+  // WERE OVERRIDING THIS WITH COMPONENTDIDUPDATE IN SUGGESTION.JS
+  // 
+  // componentDidUpdate() {
+  //   const { suggestions } = this.refs
+  //   if (!suggestions || suggestions.offsetHeight >= suggestions.scrollHeight || !this.props.scrollFocusedIntoView) {
+  //     return
+  //   }
+  //
+  //   const scrollTop = suggestions.scrollTop
+  //   let { top, bottom } = suggestions.children[this.props.focusIndex].getBoundingClientRect();
+  //   const { top: topContainer } = suggestions.getBoundingClientRect();
+  //   top = top - topContainer + scrollTop;
+  //   bottom = bottom - topContainer + scrollTop;
+  //
+  //   if(top < scrollTop) {
+  //     suggestions.scrollTop = top
+  //   } else if(bottom > suggestions.offsetHeight) {
+  //     suggestions.scrollTop = bottom - suggestions.offsetHeight
+  //   }
+  // }
 
   render() {
     const { suggestions, isLoading, style, onMouseDown } = this.props;
@@ -51,13 +54,14 @@ class SuggestionsOverlay extends Component {
 
     return (
       <div
-        {...style}
+        // {...style}
         onMouseDown={onMouseDown}
       >
 
         <ul
           ref="suggestions"
-          { ...style("list") }
+          className={this.props.suggestionsListClassName}
+          // { ...style("list") }
         >
           { this.renderSuggestions() }
         </ul>
@@ -87,7 +91,9 @@ class SuggestionsOverlay extends Component {
 
     return (
       <Suggestion
-        style={this.props.style("item")}
+        // style={this.props.style("item")}
+        suggestionClassName={this.props.suggestionClassName}
+        focusedSuggestionClassName={this.props.focusedSuggestionClassName}
         key={ id }
         id={ id }
         ref={isFocused ? "focused" : null}
@@ -114,7 +120,7 @@ class SuggestionsOverlay extends Component {
       return;
     }
 
-    return <LoadingIndicator { ...this.props.style("loadingIndicator") } />
+    return (<LoadingIndicator { ...this.props.style("loadingIndicator") } />)
   }
 
   handleMouseEnter(index, ev) {
@@ -144,4 +150,4 @@ const styled = defaultStyle(({ position }) => ({
   }
 }));
 
-export default styled(SuggestionsOverlay);
+export default SuggestionsOverlay;

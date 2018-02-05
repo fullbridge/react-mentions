@@ -374,6 +374,18 @@ module.exports = {
         descriptor: descriptor
       }))
     ], [])[index];
-  }
+  },
 
+
+  // this was Dan. part of my ugly mentions package hack
+  getFilteredProps: (props) => {
+    let keysToFilter = ['query', 'index', 'descriptor', 'suggestion', 'focused', 'markup', 'displayTransform', 'singleLine', 'textAreaClassName', 'style', 'suggestionClassName', 'suggestionsListClassName', 'focusedSuggestionClassName']
+    let filteredProps = {}
+    for (let key in props) {
+      if (!keysToFilter.includes(key)) {
+        filteredProps[key] = props[key]
+      }
+    }
+    return filteredProps
+  }
 }
