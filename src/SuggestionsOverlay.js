@@ -24,7 +24,7 @@ class SuggestionsOverlay extends Component {
 
 
   // WERE OVERRIDING THIS WITH COMPONENTDIDUPDATE IN SUGGESTION.JS
-  // 
+  //
   // componentDidUpdate() {
   //   const { suggestions } = this.refs
   //   if (!suggestions || suggestions.offsetHeight >= suggestions.scrollHeight || !this.props.scrollFocusedIntoView) {
@@ -56,6 +56,7 @@ class SuggestionsOverlay extends Component {
       <div
         // {...style}
         onMouseDown={onMouseDown}
+        className={this.props.suggestionsListWrapperDivClassName}
       >
 
         <ul

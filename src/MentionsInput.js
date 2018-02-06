@@ -107,7 +107,7 @@ class MentionsInput extends React.Component {
 
   render() {
     return (
-      <div ref="container">
+      <div className={this.props.mainDivClassName} ref="container">
         { this.renderControl() }
         { this.renderSuggestionsOverlay() }
       </div>
@@ -178,6 +178,7 @@ class MentionsInput extends React.Component {
         // style={ this.props.style("suggestions") }
         focusedSuggestionClassName={this.props.focusedSuggestionClassName}
         suggestionsListClassName={this.props.suggestionsListClassName}
+        suggestionsListWrapperDivClassName={this.props.suggestionsListWrapperDivClassName}
         suggestionClassName={this.props.suggestionClassName}
         position={ this.state.suggestionsPosition }
         focusIndex={ this.state.focusIndex }
