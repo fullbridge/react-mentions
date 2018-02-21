@@ -9,6 +9,10 @@ import LoadingIndicator from './LoadingIndicator';
 
 class SuggestionsOverlay extends Component {
 
+  constructor(props) {
+    super(props)
+  }
+
   // static propTypes = {
   //   suggestions: PropTypes.object.isRequired,
   //   focusIndex: PropTypes.number,
@@ -22,27 +26,24 @@ class SuggestionsOverlay extends Component {
     onSelect: () => null,
   };
 
+  componentDidUpdate() {
+    const { suggestions } = this.refs
+    if (!suggestions || suggestions.offsetHeight >= suggestions.scrollHeight || !this.props.scrollFocusedIntoView) {
+      return
+    }
 
-  // WERE OVERRIDING THIS WITH COMPONENTDIDUPDATE IN SUGGESTION.JS
-  //
-  // componentDidUpdate() {
-  //   const { suggestions } = this.refs
-  //   if (!suggestions || suggestions.offsetHeight >= suggestions.scrollHeight || !this.props.scrollFocusedIntoView) {
-  //     return
-  //   }
-  //
-  //   const scrollTop = suggestions.scrollTop
-  //   let { top, bottom } = suggestions.children[this.props.focusIndex].getBoundingClientRect();
-  //   const { top: topContainer } = suggestions.getBoundingClientRect();
-  //   top = top - topContainer + scrollTop;
-  //   bottom = bottom - topContainer + scrollTop;
-  //
-  //   if(top < scrollTop) {
-  //     suggestions.scrollTop = top
-  //   } else if(bottom > suggestions.offsetHeight) {
-  //     suggestions.scrollTop = bottom - suggestions.offsetHeight
-  //   }
-  // }
+    let scrollTop = suggestions.scrollTop
+    let { top, bottom } = suggestions.children[this.props.focusIndex].getBoundingClientRect();
+    const { top: topContainer } = suggestions.getBoundingClientRect();
+    top = top - topContainer + scrollTop;
+    bottom = bottom - topContainer + scrollTop;
+
+    if(top < scrollTop) {
+      suggestions.scrollTop = top
+    } else if(bottom > suggestions.offsetHeight) {
+      suggestions.scrollTop = bottom - suggestions.offsetHeight
+    }
+  }
 
   render() {
     const { suggestions, isLoading, style, onMouseDown } = this.props;
@@ -106,6 +107,10 @@ class SuggestionsOverlay extends Component {
         onClick={ () => this.select(suggestion, descriptor) }
         onMouseEnter={ () => this.handleMouseEnter(index) } />
     );
+  }
+
+  addToChildRefs(nextRef) {
+    this.setState({ childRefs: this.state.childRefs.concat(nextRef) })
   }
 
   getID(suggestion) {

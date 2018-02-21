@@ -24,11 +24,14 @@ class Suggestion extends Component {
   //   focused: PropTypes.bool,
   // };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.focused && !prevProps.focused) {
-      this.el.scrollIntoView({block: 'nearest'})
-    }
-  }
+
+  // THIS WAS THE PREVIOUS FIX FOR SCROLLING WITH ARROW KEYS NOT WORKING WHEN WE FIRST ADDED THIS PACKAGE.
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.props.focused && !prevProps.focused) {
+  //     this.el.scrollIntoView({block: 'nearest'})
+  //   }
+  // }
 
   render() {
     let rest = omit(this.props, 'style', keys(Suggestion.propTypes));

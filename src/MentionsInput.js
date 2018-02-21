@@ -101,7 +101,9 @@ class MentionsInput extends React.Component {
       suggestions: {},
 
       caretPosition: null,
-      suggestionsPosition: null
+      suggestionsPosition: null,
+
+      scrollFocusedIntoView: true
     };
   }
 
