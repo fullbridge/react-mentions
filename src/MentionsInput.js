@@ -13,6 +13,9 @@ import utils from './utils';
 import SuggestionsOverlay from './SuggestionsOverlay';
 import Highlighter from './Highlighter';
 
+import TextareaAutosize from "react-autosize-textarea"
+
+
 export const _getTriggerRegex = function(trigger, options={}) {
   if (trigger instanceof RegExp) {
     return trigger
@@ -163,7 +166,7 @@ class MentionsInput extends React.Component {
     let filteredProps = utils.getFilteredProps(props)
 
     return (
-      <textarea
+      <TextareaAutosize
         ref="input"
         { ...filteredProps }
         className={props.textAreaClassName} />
